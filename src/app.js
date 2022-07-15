@@ -1,4 +1,5 @@
 const express = require('express');
+const authorRouter = require('./resources/authors/author.router');
 
 const app = express();
 
@@ -11,5 +12,7 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
+
+app.use('/author', authorRouter);
 
 module.exports = app;
