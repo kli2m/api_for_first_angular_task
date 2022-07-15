@@ -1,0 +1,44 @@
+{
+  "name": "api_for_first_angular_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kli2m/api_for_first_angular_task.git"
+  },
+  "author": "kli2m",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kli2m/api_for_first_angular_task/issues"
+  },
+  "homepage": "https://github.com/kli2m/api_for_first_angular_task#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty"
+    }
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.4",
+    "swagger-ui-express": "^4.5.0",
+    "uuid": "^8.3.2",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  }
+}
