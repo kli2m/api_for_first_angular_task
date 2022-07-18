@@ -1,18 +1,20 @@
-const router = require('express').Router({ mergeParams: true });
-const { Course, toResponse } = require('./courses.db.model');
-const coursesService = require('./courses.service');
+import routerExpress, { Request, Response } from 'express';
+import { Course, toResponse } from './courses.db.model';
+import coursesService from './courses.service';
 
-router.route('/').get(async (req, res) => {
+const router = routerExpress.Router({ mergeParams: true });
+
+router.route('/').get(async (_: Request, res: Response) => {
   try {
-    const { courseId } = req.params;
-    const courses = await coursesService.getAll(courseId);
-    res.json(courses.map(toResponse));
+    const courses = await coursesService.getAll();
+    if (courses) res.json(courses.map(toResponse));
+    else res.status(404).send('Courses is not found');
   } catch (error) {
     res.status(404).send('Could not find courses');
   }
 });
 
-router.route('/:courseId').get(async (req, res) => {
+router.route('/:courseId').get(async (req: Request, res: Response) => {
   try {
     const course = await coursesService.get(req.params.courseId);
     res.json(toResponse(course));
@@ -21,7 +23,7 @@ router.route('/:courseId').get(async (req, res) => {
   }
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req: Request, res: Response) => {
   try {
     const course = await coursesService.create(
       new Course({
@@ -40,7 +42,7 @@ router.route('/').post(async (req, res) => {
   }
 });
 
-router.route('/:courseId').put(async (req, res) => {
+router.route('/:courseId').put(async (req: Request, res: Response) => {
   try {
     await coursesService.put(req.params.courseId, req.body);
     const newCourse = await coursesService.get(req.params.courseId);
@@ -50,7 +52,7 @@ router.route('/:courseId').put(async (req, res) => {
   }
 });
 
-router.route('/:courseId').delete(async (req, res) => {
+router.route('/:courseId').delete(async (req: Request, res: Response) => {
   try {
     await coursesService.del(req.params.courseId);
     res.status(204).send(`CourseId=${req.params.courseId} has been deleted`);
@@ -59,4 +61,4 @@ router.route('/:courseId').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,18 +1,20 @@
-const router = require('express').Router({ mergeParams: true });
-const { Author, toResponse } = require('./author.db.model');
-const authorService = require('./author.service');
+import routerExpress, { Request, Response } from 'express';
+import { Author, toResponse } from './author.db.model';
+import authorService from './author.service';
 
-router.route('/').get(async (req, res) => {
+const router = routerExpress.Router({ mergeParams: true });
+
+router.route('/').get(async (_: Request, res: Response) => {
   try {
-    const { authorId } = req.params;
-    const authors = await authorService.getAll(authorId);
-    res.json(authors.map(toResponse));
+    const authors = await authorService.getAll();
+    if (authors) res.json(authors.map(toResponse));
+    else res.status(404).send('Authors is not found');
   } catch (error) {
     res.status(404).send('Could not find authors');
   }
 });
 
-router.route('/:authorId').get(async (req, res) => {
+router.route('/:authorId').get(async (req: Request, res: Response) => {
   try {
     const author = await authorService.get(req.params.authorId);
     res.json(toResponse(author));
@@ -21,7 +23,7 @@ router.route('/:authorId').get(async (req, res) => {
   }
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req: Request, res: Response) => {
   try {
     const author = await authorService.create(
       new Author({
@@ -35,7 +37,7 @@ router.route('/').post(async (req, res) => {
   }
 });
 
-router.route('/:authorId').put(async (req, res) => {
+router.route('/:authorId').put(async (req: Request, res: Response) => {
   try {
     await authorService.put(req.params.authorId, req.body);
     const newAuthor = await authorService.get(req.params.authorId);
@@ -45,7 +47,7 @@ router.route('/:authorId').put(async (req, res) => {
   }
 });
 
-router.route('/:authorId').delete(async (req, res) => {
+router.route('/:authorId').delete(async (req: Request, res: Response) => {
   try {
     await authorService.del(req.params.authorId);
     res.status(204).send(`AuthorId=${req.params.authorId} has been deleted`);
@@ -54,4 +56,4 @@ router.route('/:authorId').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

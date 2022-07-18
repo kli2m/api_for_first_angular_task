@@ -2,10 +2,11 @@
   "name": "api_for_first_angular_task",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/server.ts",
+    "lint": "eslint ./ --ignore-path .gitignore",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -19,10 +20,13 @@
   "homepage": "https://github.com/kli2m/api_for_first_angular_task#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "pretty"
+      "pre-commit": "npm run lint"
     }
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
@@ -33,12 +37,15 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^8.19.0",
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.6",
+    "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
     "nodemon": "^2.0.19",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
   }
 }

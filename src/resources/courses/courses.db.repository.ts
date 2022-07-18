@@ -1,4 +1,4 @@
-const { Course } = require('./courses.db.model');
+import { Course } from './courses.db.model';
 
 const getAll = async () => await Course.find({});
 
@@ -10,7 +10,7 @@ const put = async (id, course) => await Course.findByIdAndUpdate({ _id: id }, co
 
 const del = async (id) => await Course.deleteOne({ _id: id });
 
-module.exports = {
+export default {
   getAll,
   get,
   create,

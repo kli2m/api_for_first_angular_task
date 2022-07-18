@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const { MONGO_CONNECTION_STRING } = require('./config');
-const { Author } = require('../resources/authors/author.db.model');
-const { Course } = require('../resources/courses/courses.db.model');
+import mongoose from 'mongoose';
+import config from './config';
+import { Author } from '../resources/authors/author.db.model';
+import { Course } from '../resources/courses/courses.db.model';
 
 const AuthorsDB = [
   new Author({
@@ -32,10 +32,7 @@ const CoursesDB = [
 ];
 console.log('CoursesDB', CoursesDB);
 const connectToDB = (app) => {
-  mongoose.connect(MONGO_CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  mongoose.connect(config.MONGO_CONNECTION_STRING);
 
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -47,4 +44,4 @@ const connectToDB = (app) => {
     app();
   });
 };
-module.exports = { AuthorsDB, connectToDB };
+export { AuthorsDB, CoursesDB, connectToDB };

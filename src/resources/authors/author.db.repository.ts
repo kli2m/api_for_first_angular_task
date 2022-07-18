@@ -1,4 +1,4 @@
-const { Author } = require('./author.db.model');
+import { Author } from './author.db.model';
 
 const getAll = async () => await Author.find({});
 
@@ -10,7 +10,7 @@ const put = async (id, author) => await Author.findByIdAndUpdate({ _id: id }, au
 
 const del = async (id) => await Author.deleteOne({ _id: id });
 
-module.exports = {
+export default {
   getAll,
   get,
   create,
