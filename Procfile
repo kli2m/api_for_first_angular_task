@@ -1,1 +1,1 @@
-web: node src/server.ts
+web: node --experimental-specifier-resolution=node --experimental-modules --no-warnings --loader ts-node/esm src/server.ts
