@@ -32,6 +32,7 @@ const CoursesDB = [
 ];
 console.log('CoursesDB', CoursesDB);
 const connectToDB = (app: any) => {
+  console.log('config.MONGO_CONNECTION_STRING= ',config.MONGO_CONNECTION_STRING)
   if (config.MONGO_CONNECTION_STRING) {
     mongoose.connect(config.MONGO_CONNECTION_STRING);
 
