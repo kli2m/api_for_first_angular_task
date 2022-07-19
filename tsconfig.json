@@ -8,8 +8,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "outDir": "./build",
-    "rootDir": "src",
+    "rootDir": "./src",
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
