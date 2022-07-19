@@ -2,13 +2,14 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "target": "es6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "outDir": "./build",
     "rootDir": "./src",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
