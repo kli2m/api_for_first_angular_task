@@ -16,10 +16,15 @@ router.route('/').get(async (_: Request, res: Response) => {
 
 router.route('/:authorId').get(async (req: Request, res: Response) => {
   try {
-    const author = await authorService.get(req.params.authorId);
-    res.json(toResponse(author));
+    const authorId = req.params['authorId'];
+    if (authorId) {
+      const author = await authorService.get(authorId);
+      if (author) {
+        res.json(toResponse(author));
+      } else new Error();
+    } else res.status(404).send(`AuthorId=${req.params['authorId']} not found`);
   } catch (error) {
-    res.status(404).send(`AuthorId=${req.params.authorId} not found`);
+    res.status(404).send(`AuthorId=${req.params['authorId']} not found`);
   }
 });
 
@@ -39,20 +44,28 @@ router.route('/').post(async (req: Request, res: Response) => {
 
 router.route('/:authorId').put(async (req: Request, res: Response) => {
   try {
-    await authorService.put(req.params.authorId, req.body);
-    const newAuthor = await authorService.get(req.params.authorId);
-    res.json(toResponse(newAuthor));
+    const authorId = req.params['authorId'];
+    if (authorId) {
+      await authorService.put(authorId, req.body);
+      const newAuthor = await authorService.get(authorId);
+      if (newAuthor) {
+        res.json(toResponse(newAuthor));
+      } else new Error();
+    } else res.status(404).send(`AuthorId=${req.params['authorId']} not found`);
   } catch (error) {
-    res.status(404).send(`AuthorId=${req.params.authorId} not found`);
+    res.status(404).send(`AuthorId=${req.params['authorId']} not found`);
   }
 });
 
 router.route('/:authorId').delete(async (req: Request, res: Response) => {
   try {
-    await authorService.del(req.params.authorId);
-    res.status(204).send(`AuthorId=${req.params.authorId} has been deleted`);
+    const authorId = req.params['authorId'];
+    if (authorId) {
+      await authorService.del(authorId);
+      res.status(204).send(`AuthorId=${authorId} has been deleted`);
+    } else new Error();
   } catch (error) {
-    res.status(404).send(`AuthorId=${req.params.authorId} not found`);
+    res.status(404).send(`AuthorId=${req.params['authorId']} not found`);
   }
 });
 

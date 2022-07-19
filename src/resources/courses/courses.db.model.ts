@@ -1,15 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
+import CourseType from '../../interfaces/course';
 import { v4 as uuidv4 } from 'uuid';
-
-interface CourseType {
-  title: string;
-  description: string;
-  creationDate: Date;
-  duration: number;
-  authors: [string];
-  _id?: string;
-  id?: string;
-}
 
 const courseSchema: Schema<CourseType> = new mongoose.Schema(
   {

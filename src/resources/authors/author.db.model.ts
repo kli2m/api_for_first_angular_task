@@ -1,12 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
+import AuthorType from '../../interfaces/author';
 import { v4 as uuidv4 } from 'uuid';
-
-interface AuthorType {
-  name: string;
-  surName: string;
-  _id?: string;
-  id?: string;
-}
 
 const authorSchema: Schema<AuthorType> = new mongoose.Schema(
   {

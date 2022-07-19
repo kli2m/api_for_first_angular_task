@@ -31,17 +31,21 @@ const CoursesDB = [
   }),
 ];
 console.log('CoursesDB', CoursesDB);
-const connectToDB = (app) => {
-  mongoose.connect(config.MONGO_CONNECTION_STRING);
+const connectToDB = (app: any) => {
+  if (config.MONGO_CONNECTION_STRING) {
+    mongoose.connect(config.MONGO_CONNECTION_STRING);
 
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', async () => {
-    console.log("we're connected!");
-    await db.dropDatabase();
-    await AuthorsDB.forEach(async (author) => await author.save());
-    await CoursesDB.forEach(async (course) => await course.save());
-    app();
-  });
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', async () => {
+      console.log("we're connected!");
+      await db.dropDatabase();
+      await AuthorsDB.forEach(async (author) => await author.save());
+      await CoursesDB.forEach(async (course) => await course.save());
+      app();
+    });
+  } else {
+    console.error('Connect is WRONG!');
+  }
 };
-export { AuthorsDB, CoursesDB, connectToDB };
+export default connectToDB;

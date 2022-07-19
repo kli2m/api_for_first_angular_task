@@ -16,10 +16,15 @@ router.route('/').get(async (_: Request, res: Response) => {
 
 router.route('/:courseId').get(async (req: Request, res: Response) => {
   try {
-    const course = await coursesService.get(req.params.courseId);
-    res.json(toResponse(course));
+    const courseId = req.params['courseId'];
+    if (courseId) {
+      const course = await coursesService.get(courseId);
+      if (course) {
+        res.json(toResponse(course));
+      } else new Error();
+    } else res.status(404).send(`CourseId=${req.params['courseId']} not found`);
   } catch (error) {
-    res.status(404).send(`CourseId=${req.params.courseId} not found`);
+    res.status(404).send(`CourseId=${req.params['courseId']} not found`);
   }
 });
 
@@ -44,20 +49,28 @@ router.route('/').post(async (req: Request, res: Response) => {
 
 router.route('/:courseId').put(async (req: Request, res: Response) => {
   try {
-    await coursesService.put(req.params.courseId, req.body);
-    const newCourse = await coursesService.get(req.params.courseId);
-    res.json(toResponse(newCourse));
+    const courseId = req.params['courseId'];
+    if (courseId) {
+      await coursesService.put(courseId, req.body);
+      const newCourse = await coursesService.get(courseId);
+      if (newCourse) {
+        res.json(toResponse(newCourse));
+      } else new Error();
+    } else res.status(404).send(`CourseId=${req.params['courseId']} not found`);
   } catch (error) {
-    res.status(404).send(`CourseId=${req.params.courseId} not found`);
+    res.status(404).send(`CourseId=${req.params['courseId']} not found`);
   }
 });
 
 router.route('/:courseId').delete(async (req: Request, res: Response) => {
   try {
-    await coursesService.del(req.params.courseId);
-    res.status(204).send(`CourseId=${req.params.courseId} has been deleted`);
+    const courseId = req.params['courseId'];
+    if (courseId) {
+      await coursesService.del(courseId);
+      res.status(204).send(`CourseId=${courseId} has been deleted`);
+    } else new Error();
   } catch (error) {
-    res.status(404).send(`CourseId=${req.params.courseId} not found`);
+    res.status(404).send(`CourseId=${req.params['courseId']} not found`);
   }
 });
 
