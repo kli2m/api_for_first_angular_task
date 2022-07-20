@@ -1,10 +1,12 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import authorRouter from './resources/authors/author.router';
 import courseRouter from './resources/courses/courses.router';
 
 const app: Express = express();
 
 app.use(express.json());
+app.use(cors({ origin: '*' }));
 
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
   if (req.originalUrl === '/') {

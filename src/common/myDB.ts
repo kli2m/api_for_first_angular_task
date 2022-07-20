@@ -13,7 +13,6 @@ const AuthorsDB = [
     surName: 'surName2',
   }),
 ];
-console.log('AuthorsDB', AuthorsDB);
 const CoursesDB = [
   new Course({
     title: 'title1',
@@ -30,7 +29,6 @@ const CoursesDB = [
     authors: ['authors2', 'authors2'],
   }),
 ];
-console.log('CoursesDB', CoursesDB);
 const connectToDB = (app: any) => {
   if (config.MONGO_CONNECTION_STRING) {
     mongoose.connect(config.MONGO_CONNECTION_STRING);
