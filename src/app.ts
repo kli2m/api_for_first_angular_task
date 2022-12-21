@@ -1,7 +1,12 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import authorRouter from './resources/authors/author.router';
+
+import verifyToken from './utils/verifyToken';
+import loginRouter from './resources/login/login.router';
+import regRouter from './resources/registration/registration.router';
+import userRouter from './resources/users/user.router';
 import courseRouter from './resources/courses/courses.router';
+import authorRouter from './resources/authors/author.router';
 
 const app: Express = express();
 
@@ -16,7 +21,10 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use('/authors', authorRouter);
-app.use('/courses', courseRouter);
+app.use('/login', loginRouter);
+app.use('/reg', regRouter);
+app.use('/users', verifyToken, userRouter);
+app.use('/authors', verifyToken, authorRouter);
+app.use('/courses', verifyToken, courseRouter);
 
 export default app;

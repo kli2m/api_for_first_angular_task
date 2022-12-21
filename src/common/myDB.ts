@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import config from './config';
+import { User } from '../resources/users/user.db.model';
 import { Author } from '../resources/authors/author.db.model';
 import { Course } from '../resources/courses/courses.db.model';
+import { getHashPsw } from '../utils/hashFn';
 
 const AuthorsDB = [
   new Author({
@@ -38,6 +40,12 @@ const connectToDB = (app: any) => {
     db.once('open', async () => {
       console.log("we're connected!");
       await db.dropDatabase();
+      if (config.ADMIN_PASSWORD) {
+        await new User({
+          login: 'admin',
+          password: await getHashPsw(config.ADMIN_PASSWORD),
+        }).save();
+      }
       await AuthorsDB.forEach(async (author) => await author.save());
       await CoursesDB.forEach(async (course) => await course.save());
       app();
